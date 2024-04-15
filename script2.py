@@ -14,10 +14,10 @@ def handle_file_and_command(conn):
         #Receive the filename
         filename = conn.recv(4096).decode("utf-8")
         print("File to check:  ",filename)
+        
         # Receive a message indicating the start of the file transfer
         start_message = conn.recv(BUFFER_SIZE)
-
-        if start_message == b"START_TRANSFER":
+        if start_message == b"START_TRANSFER":  
             file_data = b""
             while True:
                 data = conn.recv(BUFFER_SIZE)
@@ -36,15 +36,13 @@ def handle_file_and_command(conn):
 
             # Construct and execute the command
             command = ["file", file_path]
+            output = subprocess.check_output(command).decode("utf-8").strip()   #Execute file command and return output
 
             # Send the output back to client formatted as JSON
-            output = subprocess.check_output(command).decode("utf-8").strip()   #Execute file command and return output
             output_json = json.dumps({"output": output})
             conn.sendall(output_json.encode())
             print("Output sent successfully.")
-
-
-
+    #Handle any exceptions
     except Exception as e:
         print("An error occurred: ",e)
     finally:
@@ -53,6 +51,7 @@ def handle_file_and_command(conn):
 if __name__ == "__main__":
     os.makedirs(OUTPUT_DIR, exist_ok=True)  #make the directory if it does not exist
 
+    #Create socket 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.bind(("0.0.0.0", PORT))
         s.listen(1)
