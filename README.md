@@ -41,3 +41,9 @@ script1.py requires the file path, the address to send to and the port.
 ```
 python script1.py <file_path> <host> <port>
 ```
+
+## Video explanation and usage
+
+
+https://github.com/Nishchhal-R/Task_bugbase/assets/86164443/a5f0c7f5-2964-4df2-b09e-ca556e043376
+
