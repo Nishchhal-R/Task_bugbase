@@ -14,8 +14,20 @@ Final Task Solution
 <li>Receives the output of a command executed on the file from the server.</li>
 <li>Prints the received output in JSON format.</li>
 </ul>
+
+### script2.py
+<ul>
+  <li>Uses the socket module to listen for incoming connections from clients.</li>
+<li>Receives the filename and file data from the client.</li>
+<li>Saves the received file to a designated folder on the server.</li>
+<li>Constructs and executes a specified command on the received file using the subprocess module.</li>
+<li>Sends the output of the command back to the client in JSON format.</li>
+</ul>
+
 ## Setup
-1.Python3 needs to be installed.
+<ul>
+  <li>Python3 needs to be installed.</li>
+</ul>
 
 ## Usage
 ### script2.py
