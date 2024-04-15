@@ -43,7 +43,7 @@ python script1.py <file_path> <host> <port>
 ```
 
 ## Video explanation and usage
-
+[Youtube link](https://youtu.be/gauNX-PAUhE)
 
 https://github.com/Nishchhal-R/Task_bugbase/assets/86164443/a5f0c7f5-2964-4df2-b09e-ca556e043376
 
