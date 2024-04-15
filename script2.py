@@ -9,9 +9,6 @@ PORT = 1234
 BUFFER_SIZE = 1024
 OUTPUT_DIR = "./received/"
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
-
 def handle_file_and_command(conn):
     try:
         #Receive the filename
@@ -34,7 +31,7 @@ def handle_file_and_command(conn):
             file_path = os.path.join(OUTPUT_DIR, filename)
             with open(file_path, "wb") as file:
                 file.write(file_data)
-            logger.info("File saved: %s", file_path)
+            print("File saved: ",file_path)
             time.sleep(2)
 
             # Construct and execute the command
@@ -44,11 +41,12 @@ def handle_file_and_command(conn):
             output = subprocess.check_output(command).decode("utf-8").strip()   #Execute file command and return output
             output_json = json.dumps({"output": output})
             conn.sendall(output_json.encode())
-            logger.info("Output sent successfully.")
+            print("Output sent successfully.")
+
 
 
     except Exception as e:
-        logger.error("An error occurred: %s", e)
+        print("An error occurred: ",e)
     finally:
         conn.close()        #Close the connection with the client
 
@@ -58,8 +56,8 @@ if __name__ == "__main__":
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.bind(("0.0.0.0", PORT))
         s.listen(1)
-        logger.info("Waiting for connections...")
+        print("Waiting for connections...")
         while True:
             conn, addr = s.accept()
-            logger.info("Connection established with: %s", addr)
+            print("Connection established with: ",addr)
             handle_file_and_command(conn)
