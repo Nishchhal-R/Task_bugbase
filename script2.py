@@ -2,7 +2,6 @@ import socket
 import os
 import subprocess
 import json
-import logging
 import time
 
 PORT = 1234
@@ -11,7 +10,7 @@ OUTPUT_DIR = "./received/"
 
 def handle_file_and_command(conn):
     try:
-        #Receive the filename
+        # Receive the filename
         filename = conn.recv(4096).decode("utf-8")
         print("File to check:  ",filename)
         
@@ -23,7 +22,7 @@ def handle_file_and_command(conn):
                 data = conn.recv(BUFFER_SIZE)
                 if not data:
                     break
-                if data == b"END_TRANSFER":             #On receiving end message; stop receiving content and save the file
+                if data == b"END_TRANSFER":             # On receiving end message; stop receiving content and save the file
                     break
                 file_data += data
 
@@ -36,22 +35,22 @@ def handle_file_and_command(conn):
 
             # Construct and execute the command
             command = ["file", file_path]
-            output = subprocess.check_output(command).decode("utf-8").strip()   #Execute file command and return output
+            output = subprocess.check_output(command).decode("utf-8").strip()   # Execute file command and return output
 
             # Send the output back to client formatted as JSON
             output_json = json.dumps({"output": output})
             conn.sendall(output_json.encode())
             print("Output sent successfully.")
-    #Handle any exceptions
+    # Handle any exceptions
     except Exception as e:
         print("An error occurred: ",e)
     finally:
-        conn.close()        #Close the connection with the client
+        conn.close()        # Close the connection with the client
 
 if __name__ == "__main__":
-    os.makedirs(OUTPUT_DIR, exist_ok=True)  #make the directory if it does not exist
+    os.makedirs(OUTPUT_DIR, exist_ok=True)  # Make the directory if it does not exist
 
-    #Create socket 
+    # Create socket 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.bind(("0.0.0.0", PORT))
         s.listen(1)
