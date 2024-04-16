@@ -17,7 +17,7 @@ def send_file(file_path, host, port):
             s.connect((host, port))
             #Send the filename
             s.sendall(filename.encode("utf-8"))
-            time.sleep(1) #delay to keep the filename and the start of transfer message seperate
+            time.sleep(1) # Delay to keep the filename and the start of transfer message seperate
             # Send a message indicating the start of the file transfer
             s.sendall(b"START_TRANSFER")
             # Send the file contents over the socket
@@ -33,7 +33,7 @@ def send_file(file_path, host, port):
             s.sendall(b"END_TRANSFER")
             print("File sent successfully.")
 
-            #Receive the output of file command from the server
+            # Receive the output of file command from the server
             output_bytes = b""
             while True:
                 data = s.recv(4096)
@@ -41,7 +41,7 @@ def send_file(file_path, host, port):
                     break
                 output_bytes += data
 
-            #Decode the received bytes as JSON
+            # Decode the received bytes as JSON
             output_json = json.loads(output_bytes.decode())
             print("File command Output:\n",output_json)
 
@@ -52,7 +52,7 @@ def send_file(file_path, host, port):
             print("An error occurred:", e)
 
 if __name__ == "__main__":
-    if len(sys.argv) != 4:          #if correct amount of arguments aren't given; exit and tell usage of script
+    if len(sys.argv) != 4:          # If correct amount of arguments aren't given; exit and tell usage of script
         print("Usage: python3 script1.py <file_path> <host> <port>")
         sys.exit(1)
 
